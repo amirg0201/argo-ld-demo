@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-app
+  labels:
+    app: demo-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: demo-app
+  template:
+    metadata:
+      labels:
+        app: demo-app
+    spec:
+      containers:
+      - name: demo-app
+        # Aquí ArgoCD monitorea la versión
+        image: agav020102/argo-ld-demo:latest 
+        ports:
+        - containerPort: 80
+        env:
+        - name: LD_SDK_KEY
+          # Pega aquí tu clave que empieza por 'sdk-...'
+          value: "sdk-76dd5a3c-f9b2-4936-ba25-2d1ea362b9c3" 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-app-service
+spec:
+  selector:
+    app: demo-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer 
+
