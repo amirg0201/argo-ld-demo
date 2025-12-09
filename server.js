@@ -5,7 +5,6 @@ const app = express();
 const port = 80;
 
 // Configuración LaunchDarkly
-// Pega tu clave 'sdk-...' aquí abajo si no usas variables de entorno
 const ldClient = LaunchDarkly.init('sdk-76dd5a3c-f9b2-4936-ba25-2d1ea362b9c3');
 
 app.get('/', async (req, res) => {
